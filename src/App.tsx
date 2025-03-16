@@ -125,11 +125,12 @@ function App() {
 
   // タブ切り替え用のナビゲーションコンポーネント
   const MobileNavigation = () => (
-    <div className="fixed bottom-0 left-0 right-0 bg-gray-900 shadow-md border-t border-gray-800 z-10">
+    <div className="fixed bottom-0 left-0 right-0 bg-black border-t border-gray-900 z-10" style={{ backgroundColor: '#121212' }}>
       <div className="flex justify-around">
         <button 
           onClick={() => setActiveTab('dashboard')} 
-          className={`flex-1 py-3 flex flex-col items-center justify-center ${activeTab === 'dashboard' ? 'text-green-500 border-t-2 border-green-500' : 'text-gray-400'}`}
+          className={`flex-1 py-3 flex flex-col items-center justify-center border-0 bg-transparent ${activeTab === 'dashboard' ? 'text-green-500 border-t-2 border-green-500' : 'text-gray-600'}`}
+          style={{ backgroundColor: 'transparent', border: 'none', padding: '0.75rem 0' }}
         >
           <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
@@ -138,7 +139,8 @@ function App() {
         </button>
         <button 
           onClick={() => setActiveTab('insights')} 
-          className={`flex-1 py-3 flex flex-col items-center justify-center ${activeTab === 'insights' ? 'text-green-500 border-t-2 border-green-500' : 'text-gray-400'}`}
+          className={`flex-1 py-3 flex flex-col items-center justify-center border-0 bg-transparent ${activeTab === 'insights' ? 'text-green-500 border-t-2 border-green-500' : 'text-gray-600'}`}
+          style={{ backgroundColor: 'transparent', border: 'none', padding: '0.75rem 0' }}
         >
           <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -147,7 +149,8 @@ function App() {
         </button>
         <button 
           onClick={() => setActiveTab('sales')} 
-          className={`flex-1 py-3 flex flex-col items-center justify-center ${activeTab === 'sales' ? 'text-green-500 border-t-2 border-green-500' : 'text-gray-400'}`}
+          className={`flex-1 py-3 flex flex-col items-center justify-center border-0 bg-transparent ${activeTab === 'sales' ? 'text-green-500 border-t-2 border-green-500' : 'text-gray-600'}`}
+          style={{ backgroundColor: 'transparent', border: 'none', padding: '0.75rem 0' }}
         >
           <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z" />
@@ -156,7 +159,8 @@ function App() {
         </button>
         <button 
           onClick={() => setActiveTab('recruitment')} 
-          className={`flex-1 py-3 flex flex-col items-center justify-center ${activeTab === 'recruitment' ? 'text-green-500 border-t-2 border-green-500' : 'text-gray-400'}`}
+          className={`flex-1 py-3 flex flex-col items-center justify-center border-0 bg-transparent ${activeTab === 'recruitment' ? 'text-green-500 border-t-2 border-green-500' : 'text-gray-600'}`}
+          style={{ backgroundColor: 'transparent', border: 'none', padding: '0.75rem 0' }}
         >
           <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
@@ -168,7 +172,7 @@ function App() {
   );
 
   return (
-    <div className="min-h-screen bg-black">
+    <div className="min-h-screen bg-black" style={{ backgroundColor: '#121212' }}>
       <div className="p-3 pb-20 max-w-md mx-auto">
         {/* ヘッダー */}
         <div className="flex justify-between items-center mb-4">
@@ -256,7 +260,7 @@ function App() {
         <MobileNavigation />
 
         {/* フッター */}
-        <footer className="mt-8 text-center text-xs text-gray-500 pb-16">
+        <footer className="mt-8 text-center text-xs text-gray-600 pb-16">
           <p>© 2024 リクルート ダッシュボード | v1.0.0</p>
         </footer>
       </div>
