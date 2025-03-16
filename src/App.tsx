@@ -240,24 +240,20 @@ function App() {
         {/* 売上タブ */}
         {activeTab === 'sales' && (
           <div className="bg-white dark:bg-gray-800 p-3 rounded-lg shadow-sm">
-            <h2 className="text-base font-semibold mb-3 text-gray-900 dark:text-white">
+            <h2 className="text-base font-semibold mb-2 text-gray-900 dark:text-white">
               売上推移
             </h2>
-            <div className="h-[280px]">
-              <SalesChart data={salesData} />
-            </div>
+            <SalesChart data={salesData} />
           </div>
         )}
 
         {/* 採用タブ */}
         {activeTab === 'recruitment' && (
           <div className="bg-white dark:bg-gray-800 p-3 rounded-lg shadow-sm">
-            <h2 className="text-base font-semibold mb-3 text-gray-900 dark:text-white">
+            <h2 className="text-base font-semibold mb-2 text-gray-900 dark:text-white">
               採用状況
             </h2>
-            <div className="h-[280px]">
-              <RecruitmentChart data={recruitmentData} />
-            </div>
+            <RecruitmentChart data={recruitmentData} />
           </div>
         )}
 
