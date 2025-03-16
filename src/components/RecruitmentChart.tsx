@@ -71,38 +71,38 @@ const RecruitmentChart = ({ data }: RecruitmentChartProps) => {
   ];
 
   return (
-    <div className="card">
-      <h3 className="section-title">採用状況</h3>
+    <div className="card overflow-hidden p-2 md:p-4">
+      <h3 className="section-title text-xs md:text-base mb-1">採用状況</h3>
       
       {/* チャートタイプ切り替えボタン */}
-      <div className="flex justify-center mb-4 text-sm">
+      <div className="flex justify-center mb-1 text-xs">
         <button 
           onClick={() => setChartType('funnel')} 
-          className={`px-3 py-1 rounded-l-md ${chartType === 'funnel' ? 'bg-blue-500 text-white' : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300'}`}
+          className={`px-2 py-0.5 rounded-l-md ${chartType === 'funnel' ? 'bg-blue-500 text-white' : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300'}`}
         >
           ファネル
         </button>
         <button 
           onClick={() => setChartType('trend')} 
-          className={`px-3 py-1 rounded-r-md ${chartType === 'trend' ? 'bg-blue-500 text-white' : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300'}`}
+          className={`px-2 py-0.5 rounded-r-md ${chartType === 'trend' ? 'bg-blue-500 text-white' : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300'}`}
         >
           トレンド
         </button>
       </div>
       
-      <div className="h-64">
+      <div className="h-40 md:h-64">
         {chartType === 'funnel' && (
           <div className="flex flex-col h-full">
-            <div className="h-2/3">
+            <div className="h-3/5">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart
                   data={funnelData}
                   layout="vertical"
-                  margin={{ top: 5, right: 5, left: 5, bottom: 5 }}
+                  margin={{ top: 0, right: 0, left: 0, bottom: 0 }}
                 >
                   <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis type="number" />
-                  <YAxis dataKey="name" type="category" />
+                  <XAxis type="number" tick={{ fontSize: 8 }} />
+                  <YAxis dataKey="name" type="category" tick={{ fontSize: 8 }} width={40} />
                   <Tooltip formatter={(value) => [`${value}人`, '']} />
                   <Bar dataKey="value" background={{ fill: '#eee' }}>
                     {funnelData.map((entry, index) => (
@@ -112,18 +112,18 @@ const RecruitmentChart = ({ data }: RecruitmentChartProps) => {
                 </BarChart>
               </ResponsiveContainer>
             </div>
-            <div className="h-1/3 mt-2">
+            <div className="h-2/5">
               <ResponsiveContainer width="100%" height="100%">
-                <PieChart>
+                <PieChart margin={{ top: 0, right: 0, left: 0, bottom: 0 }}>
                   <Pie
                     data={pieData}
                     cx="50%"
                     cy="50%"
-                    innerRadius={25}
-                    outerRadius={40}
+                    innerRadius={15}
+                    outerRadius={30}
                     paddingAngle={5}
                     dataKey="value"
-                    label={({ name, percent }) => `${name} ${(percent * 100).toFixed(1)}%`}
+                    label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
                     labelLine={false}
                   >
                     {pieData.map((entry, index) => (
@@ -141,12 +141,12 @@ const RecruitmentChart = ({ data }: RecruitmentChartProps) => {
           <ResponsiveContainer width="100%" height="100%">
             <ComposedChart
               data={recentData}
-              margin={{ top: 10, right: 10, left: 0, bottom: 0 }}
+              margin={{ top: 0, right: 0, left: 0, bottom: 0 }}
             >
               <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="month" />
-              <YAxis yAxisId="left" orientation="left" />
-              <YAxis yAxisId="right" orientation="right" domain={[0, 100]} />
+              <XAxis dataKey="month" tick={{ fontSize: 8 }} />
+              <YAxis yAxisId="left" orientation="left" tick={{ fontSize: 8 }} />
+              <YAxis yAxisId="right" orientation="right" domain={[0, 100]} tick={{ fontSize: 8 }} />
               <Tooltip 
                 formatter={(value, name) => {
                   if (name === 'overallRate') {
@@ -165,7 +165,7 @@ const RecruitmentChart = ({ data }: RecruitmentChartProps) => {
                          value === 'hires' ? '採用' : 
                          value === 'overallRate' ? '採用率' : '';
                 }}
-                wrapperStyle={{ fontSize: '10px' }}
+                wrapperStyle={{ fontSize: '8px' }}
               />
               <Bar yAxisId="left" dataKey="applicants" fill="#8884d8" />
               <Bar yAxisId="left" dataKey="hires" fill="#ff8042" />
@@ -175,16 +175,15 @@ const RecruitmentChart = ({ data }: RecruitmentChartProps) => {
                 dataKey="overallRate"
                 stroke="#ff7300"
                 strokeWidth={2}
-                dot={{ r: 3 }}
+                dot={{ r: 2 }}
               />
             </ComposedChart>
           </ResponsiveContainer>
         )}
       </div>
       
-      <div className="mt-3 text-xs text-gray-600 dark:text-gray-400">
-        <p className="font-medium">採用分析:</p>
-        <p>
+      <div className="mt-1 text-xs text-gray-600 dark:text-gray-400">
+        <p className="text-xs">
           総応募者数: <span className="font-semibold">{totalApplicants}人</span> | 
           総採用数: <span className="font-semibold">{totalHires}人</span> | 
           採用率: <span className="font-semibold text-orange-500">{overallHireRate.toFixed(1)}%</span>

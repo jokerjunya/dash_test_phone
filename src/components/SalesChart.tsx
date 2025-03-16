@@ -41,60 +41,62 @@ const SalesChart = ({ data }: SalesChartProps) => {
   const netProfitMargin = (totalNetProfit / totalSales) * 100;
 
   return (
-    <div className="card">
-      <h3 className="section-title">月次売上推移</h3>
+    <div className="card overflow-hidden p-2 md:p-4">
+      <h3 className="section-title text-xs md:text-base mb-1">月次売上推移</h3>
       
       {/* チャートタイプ切り替えボタン */}
-      <div className="flex justify-center mb-4 text-sm">
+      <div className="flex justify-center mb-1 text-xs">
         <button 
           onClick={() => setChartType('combined')} 
-          className={`px-3 py-1 rounded-l-md ${chartType === 'combined' ? 'bg-blue-500 text-white' : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300'}`}
+          className={`px-2 py-0.5 rounded-l-md ${chartType === 'combined' ? 'bg-blue-500 text-white' : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300'}`}
         >
           複合
         </button>
         <button 
           onClick={() => setChartType('bar')} 
-          className={`px-3 py-1 ${chartType === 'bar' ? 'bg-blue-500 text-white' : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300'}`}
+          className={`px-2 py-0.5 ${chartType === 'bar' ? 'bg-blue-500 text-white' : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300'}`}
         >
           棒グラフ
         </button>
         <button 
           onClick={() => setChartType('line')} 
-          className={`px-3 py-1 ${chartType === 'line' ? 'bg-blue-500 text-white' : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300'}`}
+          className={`px-2 py-0.5 ${chartType === 'line' ? 'bg-blue-500 text-white' : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300'}`}
         >
           折線
         </button>
         <button 
           onClick={() => setChartType('profit')} 
-          className={`px-3 py-1 rounded-r-md ${chartType === 'profit' ? 'bg-blue-500 text-white' : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300'}`}
+          className={`px-2 py-0.5 rounded-r-md ${chartType === 'profit' ? 'bg-blue-500 text-white' : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300'}`}
         >
           利益
         </button>
       </div>
       
-      <div className="h-64">
+      <div className="h-40 md:h-64">
         {chartType === 'combined' && (
           <ResponsiveContainer width="100%" height="100%">
             <ComposedChart
               data={recentData}
               margin={{
-                top: 10,
-                right: 10,
+                top: 0,
+                right: 0,
                 left: 0,
                 bottom: 0,
               }}
             >
               <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="month" />
+              <XAxis dataKey="month" tick={{ fontSize: 8 }} />
               <YAxis 
                 yAxisId="left" 
                 orientation="left"
                 tickFormatter={(value) => `${value / 1000000}M`}
+                tick={{ fontSize: 8 }}
               />
               <YAxis 
                 yAxisId="right" 
                 orientation="right"
                 domain={[0, Math.max(...recentData.map(d => d.yoyGrowth || 0)) * 1.2]}
+                tick={{ fontSize: 8 }}
               />
               <Tooltip 
                 formatter={(value: number, name: string) => {
@@ -110,7 +112,7 @@ const SalesChart = ({ data }: SalesChartProps) => {
                   return value === 'total' ? '合計' : 
                          value === 'yoyGrowth' ? '前年比' : value;
                 }}
-                wrapperStyle={{ fontSize: '10px' }}
+                wrapperStyle={{ fontSize: '8px' }}
               />
               <Bar yAxisId="left" dataKey="total" fill="#8884d8" name="total" />
               <Line
@@ -120,7 +122,7 @@ const SalesChart = ({ data }: SalesChartProps) => {
                 stroke="#ff7300"
                 name="yoyGrowth"
                 strokeWidth={2}
-                dot={{ r: 3 }}
+                dot={{ r: 2 }}
               />
             </ComposedChart>
           </ResponsiveContainer>
@@ -131,15 +133,15 @@ const SalesChart = ({ data }: SalesChartProps) => {
             <BarChart
               data={recentData}
               margin={{
-                top: 10,
-                right: 10,
+                top: 0,
+                right: 0,
                 left: 0,
                 bottom: 0,
               }}
             >
               <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="month" />
-              <YAxis tickFormatter={(value) => `${value / 1000000}M`} />
+              <XAxis dataKey="month" tick={{ fontSize: 8 }} />
+              <YAxis tickFormatter={(value) => `${value / 1000000}M`} tick={{ fontSize: 8 }} />
               <Tooltip 
                 formatter={(value: number, name: string) => {
                   return [value, name === 'unitA' ? '事業部A' : name === 'unitB' ? '事業部B' : name === 'unitC' ? '事業部C' : '合計'];
@@ -152,7 +154,7 @@ const SalesChart = ({ data }: SalesChartProps) => {
                          value === 'unitB' ? '事業部B' : 
                          value === 'unitC' ? '事業部C' : value;
                 }}
-                wrapperStyle={{ fontSize: '10px' }}
+                wrapperStyle={{ fontSize: '8px' }}
               />
               <Bar dataKey="unitA" stackId="a" fill="#8884d8" />
               <Bar dataKey="unitB" stackId="a" fill="#82ca9d" />
@@ -166,15 +168,15 @@ const SalesChart = ({ data }: SalesChartProps) => {
             <LineChart
               data={recentData}
               margin={{
-                top: 10,
-                right: 10,
+                top: 0,
+                right: 0,
                 left: 0,
                 bottom: 0,
               }}
             >
               <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="month" />
-              <YAxis />
+              <XAxis dataKey="month" tick={{ fontSize: 8 }} />
+              <YAxis tick={{ fontSize: 8 }} />
               <Tooltip 
                 formatter={(value: number, name: string) => {
                   if (name === 'yoyGrowth' || name === 'momGrowth') {
@@ -190,7 +192,7 @@ const SalesChart = ({ data }: SalesChartProps) => {
                          value === 'yoyGrowth' ? '前年比' : 
                          value === 'momGrowth' ? '前月比' : value;
                 }}
-                wrapperStyle={{ fontSize: '10px' }}
+                wrapperStyle={{ fontSize: '8px' }}
               />
               <Line type="monotone" dataKey="total" stroke="#8884d8" />
               <Line type="monotone" dataKey="yoyGrowth" stroke="#ff7300" />
@@ -204,16 +206,17 @@ const SalesChart = ({ data }: SalesChartProps) => {
             <ComposedChart
               data={recentData}
               margin={{
-                top: 10,
-                right: 10,
+                top: 0,
+                right: 0,
                 left: 0,
                 bottom: 0,
               }}
             >
               <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="month" />
+              <XAxis dataKey="month" tick={{ fontSize: 8 }} />
               <YAxis 
                 tickFormatter={(value) => `${value / 1000000}M`}
+                tick={{ fontSize: 8 }}
               />
               <Tooltip 
                 formatter={(value: number, name: string) => {
@@ -232,7 +235,7 @@ const SalesChart = ({ data }: SalesChartProps) => {
                          value === 'operatingProfit' ? '営業利益' : 
                          value === 'netProfit' ? '純利益' : value;
                 }}
-                wrapperStyle={{ fontSize: '10px' }}
+                wrapperStyle={{ fontSize: '8px' }}
               />
               <Bar dataKey="total" fill="#8884d8" />
               <Line type="monotone" dataKey="operatingProfit" stroke="#82ca9d" strokeWidth={2} />
@@ -242,15 +245,14 @@ const SalesChart = ({ data }: SalesChartProps) => {
         )}
       </div>
       
-      <div className="mt-3 text-xs text-gray-600 dark:text-gray-400">
-        <p className="font-medium">前年比分析:</p>
-        <p>
+      <div className="mt-1 text-xs text-gray-600 dark:text-gray-400">
+        <p className="text-xs">
           平均成長率: <span className="font-semibold text-orange-500">{avgYoYGrowth.toFixed(1)}%</span> | 
           最高成長月: <span className="font-semibold text-green-500">
             {data.reduce((max, item) => Math.max(max, item.yoyGrowth || 0), 0).toFixed(1)}%
           </span>
         </p>
-        <p className="mt-1">
+        <p className="mt-0.5 text-xs">
           営業利益率: <span className="font-semibold text-blue-500">
             {operatingProfitMargin.toFixed(1)}%
           </span> | 
