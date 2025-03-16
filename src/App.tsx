@@ -29,7 +29,6 @@ function App() {
     hour: '2-digit',
     minute: '2-digit'
   }))
-  const [darkMode, setDarkMode] = useState(false)
   const [activeTab, setActiveTab] = useState<'dashboard' | 'insights' | 'sales' | 'recruitment'>('dashboard')
 
   // KPIデータを計算
@@ -116,11 +115,10 @@ function App() {
     setKpiData(newKpiData);
   }, [salesData, recruitmentData]);
 
-  // ダークモードの設定をbodyに適用
+  // Spotifyスタイルのため、常にダークモードを適用
   useEffect(() => {
-    // Spotifyスタイルのため、常にダークモードを適用
+    // ダークモードを適用
     document.documentElement.classList.add('dark');
-    setDarkMode(true);
   }, []);
 
   // タブ切り替え用のナビゲーションコンポーネント
@@ -231,9 +229,12 @@ function App() {
           </>
         )}
 
-        {/* インサイトタブ */}
+        {/* ビジネスインサイト */}
         {activeTab === 'insights' && (
-          <BusinessInsights data={salesData} />
+          <div className="p-2">
+            <h2 className="text-xl font-bold mb-4 text-white">ビジネスインサイト</h2>
+            <BusinessInsights salesData={salesData} />
+          </div>
         )}
 
         {/* 売上タブ */}
