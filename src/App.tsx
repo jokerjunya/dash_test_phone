@@ -25,49 +25,88 @@ function App() {
     // 売上データからKPIを計算
     const totalSales = salesData.reduce((sum, item) => sum + item.total, 0);
     
+    // 営業利益の計算
+    const totalOperatingProfit = salesData.reduce((sum, item) => sum + (item.operatingProfit || 0), 0);
+    const operatingProfitMargin = (totalOperatingProfit / totalSales) * 100;
+    
+    // 純利益の計算
+    const totalNetProfit = salesData.reduce((sum, item) => sum + (item.netProfit || 0), 0);
+    const netProfitMargin = (totalNetProfit / totalSales) * 100;
+    
     // 採用データからKPIを計算
     const totalHires = recruitmentData.reduce((sum, item) => sum + item.hires, 0);
     const totalApplicants = recruitmentData.reduce((sum, item) => sum + item.applicants, 0);
     const hiringRate = totalApplicants ? (totalHires / totalApplicants) * 100 : 0;
     
-    // YoY成長率の計算（実際のアプリではより複雑な計算が必要）
-    // 現在のデータには前年比が含まれているのでそれを使用
+    // YoY成長率の計算
     const lastMonthYoYGrowth = salesData.length > 0 ? salesData[salesData.length - 1].yoyGrowth || 0 : 0;
     
-    // 顧客単価の計算（ダミーデータ - 実際のアプリでは顧客数データが必要）
-    const customerCount = 12000; // ダミーの顧客数を増加
-    const averageRevenuePerCustomer = totalSales / customerCount;
+    // 顧客単価の計算
+    const lastMonthCustomerPrice = salesData.length > 0 ? salesData[salesData.length - 1].customerPrice || 0 : 0;
     const customerPriceYoYGrowth = 7.5; // ダミーの前年比成長率
+    
+    // 従業員数の計算
+    const currentEmployees = salesData.length > 0 ? salesData[salesData.length - 1].employees || 0 : 0;
+    const employeeGrowthRate = 10.0; // ダミーの成長率
     
     // KPIデータを更新
     const newKpiData: KPI[] = [
       { 
-        title: '年間売上', 
-        value: `$${(totalSales / 1000000).toFixed(2)}M`, 
+        title: '売上高', 
+        value: `¥${(totalSales / 1000000).toFixed(2)}M`, 
         change: lastMonthYoYGrowth, 
         isPositive: lastMonthYoYGrowth > 0 
       },
       { 
+        title: '営業利益', 
+        value: `¥${(totalOperatingProfit / 1000000).toFixed(2)}M`, 
+        change: operatingProfitMargin > 15 ? 5.2 : -2.1, 
+        isPositive: operatingProfitMargin > 15
+      },
+      { 
+        title: '純利益', 
+        value: `¥${(totalNetProfit / 1000000).toFixed(2)}M`, 
+        change: netProfitMargin > 12 ? 6.8 : -1.5, 
+        isPositive: netProfitMargin > 12
+      },
+      { 
         title: '前年比成長率', 
         value: `${lastMonthYoYGrowth.toFixed(1)}%`, 
-        change: lastMonthYoYGrowth - 5, // 前年との比較（ダミー）
-        isPositive: lastMonthYoYGrowth > 0 
+        change: lastMonthYoYGrowth - 10, 
+        isPositive: lastMonthYoYGrowth > 10
       },
       { 
         title: '顧客単価', 
-        value: `$${(averageRevenuePerCustomer / 1000).toFixed(1)}K`, 
+        value: `¥${lastMonthCustomerPrice.toFixed(2)}K`, 
         change: customerPriceYoYGrowth, 
         isPositive: customerPriceYoYGrowth > 0 
       },
       { 
-        title: '採用コンバージョン率', 
+        title: '従業員数', 
+        value: currentEmployees, 
+        change: employeeGrowthRate, 
+        isPositive: employeeGrowthRate > 0 
+      },
+      { 
+        title: '採用数', 
+        value: totalHires, 
+        change: 15.5, 
+        isPositive: true 
+      },
+      { 
+        title: '採用率', 
         value: `${hiringRate.toFixed(1)}%`, 
-        change: 1.2, // 前年との比較（ダミー）
+        change: 1.2, 
         isPositive: true 
       },
     ];
     
     setKpiData(newKpiData);
+  }, [salesData, recruitmentData]);
+
+  // CSVデータのインポート処理
+  const handleSalesDataImport = (data: SalesData[]) => {
+    setSalesData(data);
     setLastUpdated(new Date().toLocaleDateString('ja-JP', { 
       year: 'numeric', 
       month: '2-digit', 
@@ -75,15 +114,17 @@ function App() {
       hour: '2-digit',
       minute: '2-digit'
     }));
-  }, [salesData, recruitmentData]);
-
-  // データインポート時の処理
-  const handleSalesDataImport = (data: SalesData[]) => {
-    setSalesData(data);
   };
 
   const handleRecruitmentDataImport = (data: RecruitmentData[]) => {
     setRecruitmentData(data);
+    setLastUpdated(new Date().toLocaleDateString('ja-JP', { 
+      year: 'numeric', 
+      month: '2-digit', 
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit'
+    }));
   };
 
   // タブ切り替え用のナビゲーションコンポーネント

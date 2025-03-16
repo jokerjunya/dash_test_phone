@@ -5,6 +5,10 @@ export interface SalesData {
   unitB: number;
   unitC: number;
   total: number;
+  operatingProfit?: number; // 営業利益
+  netProfit?: number; // 純利益
+  customerPrice?: number; // 顧客単価
+  employees?: number; // 従業員数
   yoyGrowth?: number;
   momGrowth?: number;
 }
@@ -37,9 +41,13 @@ export interface CSVImportError {
 export interface SalesDataCSV {
   Month: string;
   Total_Sales: string;
+  Operating_Profit: string;
+  Net_Profit: string;
   Business_Unit_A: string;
   Business_Unit_B: string;
   Business_Unit_C: string;
+  Customer_Price: string;
+  Employees: string;
 }
 
 // 新しいCSVフォーマットの採用データ
