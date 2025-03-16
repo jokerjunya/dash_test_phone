@@ -41,7 +41,7 @@ const SalesChart = ({ data }: SalesChartProps) => {
   const netProfitMargin = (totalNetProfit / totalSales) * 100;
 
   return (
-    <div className="card overflow-hidden p-2 md:p-4">
+    <div className="card overflow-hidden p-2 md:p-4 flex flex-col">
       <h3 className="section-title text-xs md:text-base mb-1">月次売上推移</h3>
       
       {/* チャートタイプ切り替えボタン */}
@@ -72,7 +72,7 @@ const SalesChart = ({ data }: SalesChartProps) => {
         </button>
       </div>
       
-      <div className="h-40 md:h-64">
+      <div className="h-[180px] md:h-[250px]">
         {chartType === 'combined' && (
           <ResponsiveContainer width="100%" height="100%">
             <ComposedChart

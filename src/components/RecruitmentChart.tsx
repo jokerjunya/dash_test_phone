@@ -71,7 +71,7 @@ const RecruitmentChart = ({ data }: RecruitmentChartProps) => {
   ];
 
   return (
-    <div className="card overflow-hidden p-2 md:p-4">
+    <div className="card overflow-hidden p-2 md:p-4 flex flex-col">
       <h3 className="section-title text-xs md:text-base mb-1">採用状況</h3>
       
       {/* チャートタイプ切り替えボタン */}
@@ -90,7 +90,7 @@ const RecruitmentChart = ({ data }: RecruitmentChartProps) => {
         </button>
       </div>
       
-      <div className="h-40 md:h-64">
+      <div className="h-[180px] md:h-[250px]">
         {chartType === 'funnel' && (
           <div className="flex flex-col h-full">
             <div className="h-3/5">
