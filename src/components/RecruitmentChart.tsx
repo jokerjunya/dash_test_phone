@@ -72,19 +72,19 @@ const RecruitmentChart = ({ data }: RecruitmentChartProps) => {
 
   return (
     <div className="card overflow-hidden p-2 md:p-4 flex flex-col">
-      <h3 className="section-title text-xs md:text-base mb-1">採用状況</h3>
+      <h3 className="section-title text-xs md:text-base mb-1 text-white">採用状況</h3>
       
       {/* チャートタイプ切り替えボタン */}
       <div className="flex justify-center mb-1 text-xs">
         <button 
           onClick={() => setChartType('funnel')} 
-          className={`px-2 py-0.5 rounded-l-md ${chartType === 'funnel' ? 'bg-blue-500 text-white' : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300'}`}
+          className={`px-2 py-0.5 rounded-l-md ${chartType === 'funnel' ? 'bg-green-500 text-black' : 'bg-gray-800 text-gray-400'}`}
         >
           ファネル
         </button>
         <button 
           onClick={() => setChartType('trend')} 
-          className={`px-2 py-0.5 rounded-r-md ${chartType === 'trend' ? 'bg-blue-500 text-white' : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300'}`}
+          className={`px-2 py-0.5 rounded-r-md ${chartType === 'trend' ? 'bg-green-500 text-black' : 'bg-gray-800 text-gray-400'}`}
         >
           トレンド
         </button>
@@ -100,13 +100,13 @@ const RecruitmentChart = ({ data }: RecruitmentChartProps) => {
                   layout="vertical"
                   margin={{ top: 0, right: 0, left: 0, bottom: 0 }}
                 >
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis type="number" tick={{ fontSize: 8 }} />
-                  <YAxis dataKey="name" type="category" tick={{ fontSize: 8 }} width={40} />
-                  <Tooltip formatter={(value) => [`${value}人`, '']} />
-                  <Bar dataKey="value" background={{ fill: '#eee' }}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#333" />
+                  <XAxis type="number" tick={{ fontSize: 8, fill: "#aaa" }} />
+                  <YAxis dataKey="name" type="category" tick={{ fontSize: 8, fill: "#aaa" }} width={40} />
+                  <Tooltip formatter={(value) => [`${value}人`, '']} contentStyle={{ backgroundColor: '#222', borderColor: '#333' }} itemStyle={{ color: '#ddd' }} />
+                  <Bar dataKey="value" background={{ fill: '#333' }}>
                     {funnelData.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={entry.fill} />
+                      <Cell key={`cell-${index}`} fill={index === 0 ? '#1DB954' : index === 1 ? '#1ED760' : index === 2 ? '#1AA34A' : '#168F40'} />
                     ))}
                   </Bar>
                 </BarChart>
@@ -127,10 +127,10 @@ const RecruitmentChart = ({ data }: RecruitmentChartProps) => {
                     labelLine={false}
                   >
                     {pieData.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={entry.fill} />
+                      <Cell key={`cell-${index}`} fill={index === 0 ? '#1DB954' : '#333'} />
                     ))}
                   </Pie>
-                  <Tooltip formatter={(value) => [`${value}人`, '']} />
+                  <Tooltip formatter={(value) => [`${value}人`, '']} contentStyle={{ backgroundColor: '#222', borderColor: '#333' }} itemStyle={{ color: '#ddd' }} />
                 </PieChart>
               </ResponsiveContainer>
             </div>
@@ -143,10 +143,10 @@ const RecruitmentChart = ({ data }: RecruitmentChartProps) => {
               data={recentData}
               margin={{ top: 0, right: 0, left: 0, bottom: 0 }}
             >
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="month" tick={{ fontSize: 8 }} />
-              <YAxis yAxisId="left" orientation="left" tick={{ fontSize: 8 }} />
-              <YAxis yAxisId="right" orientation="right" domain={[0, 100]} tick={{ fontSize: 8 }} />
+              <CartesianGrid strokeDasharray="3 3" stroke="#333" />
+              <XAxis dataKey="month" tick={{ fontSize: 8, fill: "#aaa" }} />
+              <YAxis yAxisId="left" orientation="left" tick={{ fontSize: 8, fill: "#aaa" }} />
+              <YAxis yAxisId="right" orientation="right" domain={[0, 100]} tick={{ fontSize: 8, fill: "#aaa" }} />
               <Tooltip 
                 formatter={(value, name) => {
                   if (name === 'overallRate') {
@@ -158,6 +158,8 @@ const RecruitmentChart = ({ data }: RecruitmentChartProps) => {
                     name === 'offers' ? 'オファー' : '採用'];
                 }}
                 labelFormatter={(label) => `${label}月`}
+                contentStyle={{ backgroundColor: '#222', borderColor: '#333' }}
+                itemStyle={{ color: '#ddd' }}
               />
               <Legend 
                 formatter={(value) => {
@@ -165,15 +167,15 @@ const RecruitmentChart = ({ data }: RecruitmentChartProps) => {
                          value === 'hires' ? '採用' : 
                          value === 'overallRate' ? '採用率' : '';
                 }}
-                wrapperStyle={{ fontSize: '8px' }}
+                wrapperStyle={{ fontSize: '8px', color: '#aaa' }}
               />
-              <Bar yAxisId="left" dataKey="applicants" fill="#8884d8" />
-              <Bar yAxisId="left" dataKey="hires" fill="#ff8042" />
+              <Bar yAxisId="left" dataKey="applicants" fill="#1DB954" />
+              <Bar yAxisId="left" dataKey="hires" fill="#1AA34A" />
               <Line
                 yAxisId="right"
                 type="monotone"
                 dataKey="overallRate"
-                stroke="#ff7300"
+                stroke="#1ED760"
                 strokeWidth={2}
                 dot={{ r: 2 }}
               />
@@ -182,11 +184,11 @@ const RecruitmentChart = ({ data }: RecruitmentChartProps) => {
         )}
       </div>
       
-      <div className="mt-1 text-xs text-gray-600 dark:text-gray-400">
+      <div className="mt-1 text-xs text-gray-400">
         <p className="text-xs">
-          総応募者数: <span className="font-semibold">{totalApplicants}人</span> | 
-          総採用数: <span className="font-semibold">{totalHires}人</span> | 
-          採用率: <span className="font-semibold text-orange-500">{overallHireRate.toFixed(1)}%</span>
+          総応募者数: <span className="font-semibold text-white">{totalApplicants}人</span> | 
+          総採用数: <span className="font-semibold text-white">{totalHires}人</span> | 
+          採用率: <span className="font-semibold text-green-500">{overallHireRate.toFixed(1)}%</span>
         </p>
       </div>
     </div>
